@@ -7,11 +7,11 @@ const getAction = async function (context, req) {
       "TestPartition",
       context.bindingData.rowKey
     );
+
+    const formattedEntity = formatEntity(entity);
+
     context.res!.status = 200;
-    context.res!.body = {
-      message: "Data retrieved.",
-      data: entity,
-    };
+    context.res!.body = formattedEntity;
   } catch (error) {
     console.log(error);
     context.res!.status = 400;
@@ -19,6 +19,16 @@ const getAction = async function (context, req) {
       message: "An error occurred",
     };
   }
+};
+
+const formatEntity = function (entity) {
+  const formattedEntity = {};
+  Object.keys(entity).map(function (key) {
+    if (!key.startsWith(".")) {
+      formattedEntity[key] = entity[key]["_"];
+    }
+  });
+  return formattedEntity;
 };
 
 export { getAction };
