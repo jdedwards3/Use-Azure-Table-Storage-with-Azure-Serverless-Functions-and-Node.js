@@ -11,13 +11,13 @@ const httpTrigger: AzureFunction = async function (
   context.res!.headers["Content-Type"] = "application/json";
 
   if (req.method == "POST") {
-    actions.postAction(context, req);
+    await actions.postAction(context, req);
   } else if (req.method == "GET") {
-    actions.getAction(context, req);
+    await actions.getAction(context, req);
   } else if (req.method == "PUT") {
-    actions.putAction(context, req);
+    await actions.putAction(context, req);
   } else if (req.method == "DELETE") {
-    actions.deleteAction(context, req);
+    await actions.deleteAction(context, req);
   } else {
     // method does not match any
     context.res!.status = 500;
